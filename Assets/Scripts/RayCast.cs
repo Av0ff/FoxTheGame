@@ -6,6 +6,8 @@ public class RayCast : MonoBehaviour
 {
     private Collider collider;
     private Camera _camera;
+    [SerializeField]
+    private InfoPanel panel;
 
     private void Start()
     {
@@ -20,13 +22,20 @@ public class RayCast : MonoBehaviour
         {
             if (hit.collider.GetComponent<Outline>())
             {
-                hit.collider.GetComponent<Outline>().OutlineWidth = 2;
+
+                hit.collider.GetComponent<Outline>().OutlineWidth = 3;
                 collider = hit.collider;
+                panel.PanelOn();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    hit.collider.GetComponent<Fox>().Attack();
+                }
             }
             else
             {
                 if (collider != null)
                 collider.GetComponent<Outline>().OutlineWidth = 0;
+                panel.PanelOff();
             }
         }
     }
