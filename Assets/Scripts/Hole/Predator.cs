@@ -6,7 +6,7 @@ public abstract class Predator : MonoBehaviour
 {
     public abstract float PredatorSpeed { get; }
 
-    public int Health { get; set; }
+    public abstract int Health { get; set; }
 
     public abstract int Damage { get; }
 
