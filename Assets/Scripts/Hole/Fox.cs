@@ -16,29 +16,32 @@ public class Fox : Predator
     }
 
     public override int Health { get; set; } = 10;
-    public override float PredatorSpeed { get; } = 10;
+    public override float PredatorSpeed { get; } = 25;
 
-    public override int Damage { get; } = 5;
+    public override int Damage { get; } = 1;
 
     public override int LootMeat { get; } = 0;
 
-    public override void Attack()
+    public override void Attack(/*Predator predator*/)
     {
        if(Health != 0)
         {
             Health--;
         }
+
+        //predator.Health -= Damage;
     }
 
     private void OnEnable()
     {
-        if(Health != 10)
+        //if(Health != 10)
         Health = DontDestroyOnLoadLevel.load.healthPoints;
     }
     //Временное решение для теста
     private void OnDestroy()
     {
         DontDestroyOnLoadLevel.load.healthPoints = Health;
+        //DontDestroyOnLoadLevel.fox = this;    //
     }
     
 }

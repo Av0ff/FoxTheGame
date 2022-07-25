@@ -5,8 +5,17 @@ using UnityEngine.UI;
 
 public class HP : MonoBehaviour
 {
+    private Slider hp;
+    private Fox fox;
     private void Awake()
     {
-        gameObject.GetComponent<Slider>().value = DontDestroyOnLoadLevel.load.healthPoints;
+        hp = gameObject.GetComponent<Slider>();
+        fox = gameObject.GetComponentInParent<Fox>();
+        hp.value = DontDestroyOnLoadLevel.load.healthPoints;
+    }
+
+    private void Update()
+    {
+        hp.value = fox.Health;
     }
 }

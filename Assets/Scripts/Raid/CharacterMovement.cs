@@ -7,19 +7,19 @@ public class CharacterMovement : MonoBehaviour
 {
     [SerializeField]
     private Camera camera;
+
     [SerializeField]
-    private Transform target;
-
-    private Fox character;
-
     private NavMeshAgent fox;
+
+    private Fox predatorsSpeed;
 
     private void Awake()
     {
+        predatorsSpeed = GetComponent<Fox>();
         camera = Camera.main;
-        character = gameObject.GetComponentInChildren<Fox>();
-        fox = GetComponent<NavMeshAgent>();
+        fox = gameObject.GetComponent<NavMeshAgent>();
         fox.ResetPath();
+        fox.speed = predatorsSpeed.PredatorSpeed;
     }
     void FixedUpdate()
     {
@@ -27,34 +27,18 @@ public class CharacterMovement : MonoBehaviour
         {
             Ray();
         }
-        //gameObject.transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * character.PredatorSpeed);
-        gameObject.transform.LookAt(target);
-
-        if (Vector3.Distance(fox.transform.position, target.position) > 2f)
-        {
-            fox.isStopped = false;
-            fox.SetDestination(target.position);
-        }
-        else
-        {
-            //fox.isStopped = true;
-            fox.ResetPath();
-        }
-        
     }
 
     private void Ray()
     {
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if(hit.collider)
+            if (hit.collider)
             {
-                target.position = hit.point;
-                target.rotation = Quaternion.FromToRotation(target.up, hit.normal) * target.rotation;
+                fox.SetDestination(hit.point);
             }
-            
+
         }
     }
 }

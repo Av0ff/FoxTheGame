@@ -7,24 +7,25 @@ public class DontDestroyOnLoadLevel : MonoBehaviour
 {
     public static DontDestroyOnLoadLevel load { get; private set; }
 
-    public int healthPoints { get; set; }
+    public Fox fox;
 
-    //public Fox fox;
+    public int healthPoints;
+
+    //public static Fox fox = new Fox();   //
     private void Awake()
     {
-        if (load != null)
+        healthPoints = fox.Health;
+        if (load == null)
+        {
+            load = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if(load != this)
         {
             Destroy(gameObject);
-            return;
         }
-        load = this;
-        DontDestroyOnLoad(gameObject);
-
+        
         //healthPoints = fox.Health;
     }
 
-    public void LoadLevel()
-    {
-        SceneManager.LoadScene(1);
-    }    
 }

@@ -12,5 +12,5 @@ public abstract class Predator : MonoBehaviour
 
     public abstract int LootMeat { get; }
 
-    public abstract void Attack();
+    public abstract void Attack(/*Predator predator*/);
 }

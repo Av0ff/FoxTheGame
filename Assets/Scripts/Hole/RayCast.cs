@@ -4,37 +4,37 @@ using UnityEngine;
 
 public class RayCast : MonoBehaviour
 {
-    private Collider collider;
-    private Camera _camera;
+    private Collider prevCollider;
+    private Camera cameraMain;
     [SerializeField]
     private InfoPanel panel;
 
     private void Start()
     {
-        _camera = Camera.main;
+        cameraMain = Camera.main;
     }
 
     void Update()
     {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray,out hit))
         {
             if (hit.collider.GetComponent<Outline>())
             {
-
                 hit.collider.GetComponent<Outline>().OutlineWidth = 3;
-                collider = hit.collider;
+                prevCollider = hit.collider;
                 panel.PanelOn();
                 if (Input.GetMouseButtonDown(0))
                 {
                     hit.collider.GetComponent<Fox>().Attack();
+                    //DontDestroyOnLoadLevel.fox = hit.collider.GetComponent<Fox>();//
                 }
             }
             else
             {
-                if (collider != null)
-                collider.GetComponent<Outline>().OutlineWidth = 0;
+                if (prevCollider != null)
+                prevCollider.GetComponent<Outline>().OutlineWidth = 0;
                 panel.PanelOff();
             }
         }
