@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 671752468}
   - component: {fileID: 671752467}
   m_Layer: 0
-  m_Name: GoRaid
+  m_Name: LevelLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1502,8 +1502,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 671752467}
-        m_TargetAssemblyTypeName: LoadHome, Assembly-CSharp
-        m_MethodName: GoRaid
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: NextScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1931,7 +1931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.18942711, b: 0.14199996, a: 1}
+  m_Color: {r: 1, g: 0.3647059, b: 0.14199996, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

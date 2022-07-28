@@ -11,6 +11,8 @@ public class DontDestroyOnLoadLevel : MonoBehaviour
 
     public int healthPoints;
 
+    public int food;
+
     //public static Fox fox = new Fox();   //
     private void Awake()
     {

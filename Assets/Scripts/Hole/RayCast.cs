@@ -27,8 +27,7 @@ public class RayCast : MonoBehaviour
                 panel.PanelOn();
                 if (Input.GetMouseButtonDown(0))
                 {
-                    hit.collider.GetComponent<Fox>().Attack();
-                    //DontDestroyOnLoadLevel.fox = hit.collider.GetComponent<Fox>();//
+                  
                 }
             }
             else

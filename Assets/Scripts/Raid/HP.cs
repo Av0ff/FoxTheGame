@@ -6,16 +6,17 @@ using UnityEngine.UI;
 public class HP : MonoBehaviour
 {
     private Slider hp;
-    private Fox fox;
+    private Predator predator;
     private void Awake()
     {
         hp = gameObject.GetComponent<Slider>();
-        fox = gameObject.GetComponentInParent<Fox>();
-        hp.value = DontDestroyOnLoadLevel.load.healthPoints;
+        predator = gameObject.GetComponentInParent<Predator>();
+        hp.maxValue = predator.Health;
+        if (predator is Fox) hp.value = DontDestroyOnLoadLevel.load.healthPoints;
     }
 
     private void Update()
     {
-        hp.value = fox.Health;
+        hp.value = predator.Health;
     }
 }

@@ -9,23 +9,34 @@ public class CharacterMovement : MonoBehaviour
     private Camera camera;
 
     [SerializeField]
-    private NavMeshAgent fox;
+    private NavMeshAgent foxAgent;
 
-    private Fox predatorsSpeed;
+    private Fox character;
+
+    [SerializeField]
+    private Predator targetPredator;
+
+    public LayerMask Enemy;
 
     private void Awake()
     {
-        predatorsSpeed = GetComponent<Fox>();
+        character = GetComponent<Fox>();
         camera = Camera.main;
-        fox = gameObject.GetComponent<NavMeshAgent>();
-        fox.ResetPath();
-        fox.speed = predatorsSpeed.PredatorSpeed;
+        foxAgent = gameObject.GetComponent<NavMeshAgent>();
+        foxAgent.ResetPath();
+        foxAgent.speed = character.PredatorSpeed;
     }
-    void FixedUpdate()
+    void Update()
     {
-        if(Input.GetMouseButton(1))
+        if(Input.GetMouseButtonDown(1))
         {
             Ray();
+       // }
+        //else if(Input.GetMouseButtonDown(0))
+        //{
+            RayEnemy();
+            if (targetPredator != null && !(targetPredator is Fox)) character.Attack(targetPredator);
+            targetPredator = null;
         }
     }
 
@@ -36,9 +47,21 @@ public class CharacterMovement : MonoBehaviour
         {
             if (hit.collider)
             {
-                fox.SetDestination(hit.point);
+                foxAgent.SetDestination(hit.point);
             }
+        }
+    }
 
+
+    private void RayEnemy()
+    {
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit,Enemy.value))
+        {
+            if (hit.collider)
+            {
+                targetPredator = hit.collider.GetComponent<Predator>();
+            }
         }
     }
 }

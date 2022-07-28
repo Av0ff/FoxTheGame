@@ -22,14 +22,14 @@ public class Fox : Predator
 
     public override int LootMeat { get; } = 0;
 
-    public override void Attack(/*Predator predator*/)
+    public override void Attack(Predator predator)
     {
-       if(Health != 0)
-        {
-            Health--;
-        }
+        predator.Health -= Damage;
+    }
 
-        //predator.Health -= Damage;
+    public override void Death()
+    {
+        
     }
 
     private void OnEnable()

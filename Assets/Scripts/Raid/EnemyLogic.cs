@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyLogic : MonoBehaviour
+public class EnemyLogic : MonoBehaviour  //использрвать полиморфизм для всех врагов в сцене (для хищников и добычи)
 {
     private Bear bear;
 
@@ -12,6 +12,8 @@ public class EnemyLogic : MonoBehaviour
     public Transform fox;
 
     public LayerMask whatIsGround, whatIsPlayer;
+
+    public Terrain terr;
 
     //Patroling
     private Vector3 walkPoint; //позиция обхода
@@ -37,11 +39,11 @@ public class EnemyLogic : MonoBehaviour
         agent.speed = bear.PredatorSpeed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer); //радиус видимости
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer); //радиус атаки
-
+        
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
@@ -49,13 +51,14 @@ public class EnemyLogic : MonoBehaviour
 
     private void Patroling()
     {
+
         if (!walkPointSet) SearchWalkPoint();
 
         if(walkPointSet) agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = walkPoint - transform.position;
 
-        if (distanceToWalkPoint.magnitude < 1) walkPointSet = false;
+        if (distanceToWalkPoint.magnitude < 5) walkPointSet = false;
     }
 
     private void SearchWalkPoint()
@@ -63,26 +66,27 @@ public class EnemyLogic : MonoBehaviour
         float randomX = Random.Range(-walkPointRange, walkPointRange);
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        walkPoint = new Vector3(transform.position.x + randomX, terr.SampleHeight(new Vector3(Mathf.RoundToInt(transform.position.x + randomX), 0, Mathf.RoundToInt(transform.position.z + randomZ))), transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround)) walkPointSet = true;
+        if (Physics.Raycast(walkPoint, -transform.up, 10f, whatIsGround)) walkPointSet = true;
 
     }
     
     private void ChasePlayer()
     {
         agent.SetDestination(fox.position);
+        walkPointSet = false;
     }
 
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
 
-        transform.LookAt(bear.transform.position);
+        transform.LookAt(fox.position);
 
         if(!alreadyAttack)
         {
-            bear.Attack();
+            bear.Attack(fox.gameObject.GetComponent<Predator>());
 
             alreadyAttack = true;
             Invoke(nameof(ResetAttack), attackCd);
