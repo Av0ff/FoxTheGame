@@ -1,33 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LootSystem : MonoBehaviour
 {
     [SerializeField]
-    private Fox character;
+    private Fox _character;
+
+    private DontDestroyOnLoadLevel _data = DontDestroyOnLoadLevel.Load;
 
     private void Awake()
     {
-        character = GameObject.FindObjectOfType<Fox>();
+        _character = GameObject.FindObjectOfType<Fox>();
+        gameObject.GetComponent<Outline>().OutlineWidth = 0;
     }
 
     private void Update()
     {
-        if (DistanceToPickUp() < 3f)
+        if(_data.Food != 9)
         {
-            DontDestroyOnLoadLevel.load.food++;
-            Destroy(gameObject);
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, character.transform.position, Time.deltaTime * 10f);
+            if (DistanceToPickUp() < 3f)
+            {
+                _data.Food++;
+                Destroy(gameObject);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, _character.transform.position, Time.deltaTime * 10f);
+            }
         }
     }
 
     private float DistanceToPickUp()
     {
-        Vector3 direction = character.transform.position - transform.position;
+        Vector3 direction = _character.transform.position - transform.position;
 
         return Vector3.Magnitude(direction);
     }

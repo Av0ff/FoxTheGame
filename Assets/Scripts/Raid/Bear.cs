@@ -1,23 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bear : Predator
 {
     [SerializeField]
-    private Fox fox;
-
-    private Outline outline;
+    private Fox _fox;
 
     [SerializeField]
-    private GameObject loot;
+    private GameObject _loot;
 
-    private EnemyKill enemykill = new();
+    private EnemyKill _enemykill = new();
+
+    [SerializeField]
+    private ParticleSystem _dust;
 
     private void Awake()
     {
-        outline = GetComponent<Outline>();
-        outline.OutlineWidth = 0;
+       _dust = GameObject.FindObjectOfType<ParticleSystem>();
     }
 
     private void Update()
@@ -38,12 +36,12 @@ public class Bear : Predator
 
     public override void Attack(Predator predator)
     {
-        if (predator is Fox) fox.Health -= Damage;
+        if (predator is Fox) _fox.Health -= Damage;
     }
 
     public override void Death()
     {
-        enemykill.SendEnemyKilled();
+        _enemykill.SendEnemyKilled();
         Destroy(gameObject);
     }
 
@@ -51,18 +49,27 @@ public class Bear : Predator
     {
         for(int i = 0; i < LootMeat; i++)
         {
-            Instantiate(loot, transform.position, Quaternion.identity);
+            Instantiate(_loot, transform.position + Vector3.up, Quaternion.identity);
         }
         
     }
 
+    private void SpawnDust()
+    {
+        _dust.transform.position = gameObject.transform.position;
+        //dust.GetComponent<ParticleSystem>().Play();
+        _dust.Play();
+    }
+
     private void OnEnable()
     {
-        enemykill.OnEnemyKilled += SpawnLoot;
+        _enemykill.OnEnemyKilled += SpawnLoot;
+        _enemykill.OnEnemyKilled += SpawnDust;
     }
 
     private void OnDisable()
     {
-        enemykill.OnEnemyKilled -= SpawnLoot;
+        _enemykill.OnEnemyKilled -= SpawnLoot;
+        _enemykill.OnEnemyKilled -= SpawnDust;
     }
 }

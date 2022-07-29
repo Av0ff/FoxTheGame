@@ -1,21 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Fox : Predator
 {
-    private void Awake()
-    {
-        //gameObject.GetComponent<Outline>().OutlineWidth = 0;
-        if(TryGetComponent<Outline>(out Outline outline))
-        {   
-            outline.OutlineWidth = 0;
-        }
-        //Проверка хп после вылазки, где нас могут побить
-        //DontDestroyOnLoadLevel.load.healthPoints = Health;
-    }
-
     public override int Health { get; set; } = 10;
+
     public override float PredatorSpeed { get; } = 25;
 
     public override int Damage { get; } = 1;
@@ -29,19 +15,17 @@ public class Fox : Predator
 
     public override void Death()
     {
-        
+        GetComponent<CharacterInteraction>().enabled = false;
     }
 
     private void OnEnable()
     {
-        //if(Health != 10)
-        Health = DontDestroyOnLoadLevel.load.healthPoints;
+        Health = DontDestroyOnLoadLevel.Load.HealthPoints;
     }
-    //Временное решение для теста
+
     private void OnDestroy()
     {
-        DontDestroyOnLoadLevel.load.healthPoints = Health;
-        //DontDestroyOnLoadLevel.fox = this;    //
+        DontDestroyOnLoadLevel.Load.HealthPoints = Health;
     }
     
 }

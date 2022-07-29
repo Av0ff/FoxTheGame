@@ -1,33 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DontDestroyOnLoadLevel : MonoBehaviour
 {
-    public static DontDestroyOnLoadLevel load { get; private set; }
+    public static DontDestroyOnLoadLevel Load { get; private set; }
 
-    public Fox fox;
+    public Fox Fox;
 
-    public int healthPoints;
+    public int HealthPoints;
+    [Tooltip("Не ставить больше 9")]
+    [SerializeField]
+    private int _food1;
 
-    public int food;
+    public int MaxFood { get; } = 9;
 
-    //public static Fox fox = new Fox();   //
+    public int Food { get { return _food1; } set { if (value < 10) { _food1 = value; } } }
+
+
+
+
     private void Awake()
     {
-        healthPoints = fox.Health;
-        if (load == null)
+        HealthPoints = Fox.Health;
+        if (Load == null)
         {
-            load = this;
+            Load = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if(load != this)
+        else if (Load != this)
         {
             Destroy(gameObject);
         }
-        
-        //healthPoints = fox.Health;
     }
 
 }

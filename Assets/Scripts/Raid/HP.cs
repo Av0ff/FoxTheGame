@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HP : MonoBehaviour
 {
-    private Slider hp;
-    private Predator predator;
+    private Slider _hp;
+
+    private Predator _predator;
+
     private void Awake()
     {
-        hp = gameObject.GetComponent<Slider>();
-        predator = gameObject.GetComponentInParent<Predator>();
-        hp.maxValue = predator.Health;
-        if (predator is Fox) hp.value = DontDestroyOnLoadLevel.load.healthPoints;
+        _hp = gameObject.GetComponent<Slider>();
+        _predator = gameObject.GetComponentInParent<Predator>();
+        _hp.maxValue = _predator.Health;
+        if (_predator is Fox) _hp.value = DontDestroyOnLoadLevel.Load.HealthPoints;
     }
 
     private void Update()
     {
-        hp.value = predator.Health;
+        _hp.value = _predator.Health;
     }
 }

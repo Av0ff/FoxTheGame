@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6545086431357202745}
   - component: {fileID: 3048466348724144119}
   - component: {fileID: 4453094501145547849}
+  - component: {fileID: -3873696613265709818}
   m_Layer: 0
   m_Name: Loot
   m_TagString: Untagged
@@ -127,5 +128,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85cf85240e9ed20408334d9aae0c1862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
-  data: {fileID: 0}
+  _character: {fileID: 0}
+--- !u!114 &-3873696613265709818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3494714110778954931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.98224026, b: 0.29000002, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

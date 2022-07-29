@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowHp : MonoBehaviour
 {
-    private Camera cameraM;
+    private Camera _cameraM;
     void Start()
     {
-        cameraM = Camera.main;
+        _cameraM = Camera.main;
     }
 
     void LateUpdate()
     {
-        transform.LookAt(transform.position + cameraM.transform.forward);
+        transform.LookAt(transform.position + _cameraM.transform.forward);
     }
 }

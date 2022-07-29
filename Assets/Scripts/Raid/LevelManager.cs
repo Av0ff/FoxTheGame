@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,7 +18,13 @@ public class LevelManager : MonoBehaviour
             default:
                 break;
         }
-
     }
 
+    public void RestartLevel()
+    {
+        var fox = GameObject.FindObjectOfType<Fox>();
+        fox.Health = 10;
+        DontDestroyOnLoadLevel.Load.Food = 0;
+        SceneManager.LoadScene(0);
+    }
 }
