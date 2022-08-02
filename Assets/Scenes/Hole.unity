@@ -627,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af2f3f560f79b24183c65c8c452bcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fox: {fileID: 1550172228}
+  _fox: {fileID: 1550172228}
   HealthPoints: 0
   _food1: 0
 --- !u!4 &377046651

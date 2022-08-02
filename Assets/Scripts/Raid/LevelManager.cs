@@ -22,9 +22,8 @@ public class LevelManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        var fox = GameObject.FindObjectOfType<Fox>();
-        fox.Health = 10;
-        DontDestroyOnLoadLevel.Load.Food = 0;
+        var data = GameObject.FindObjectOfType<DontDestroyOnLoadLevel>();
+        Destroy(data.gameObject);
         SceneManager.LoadScene(0);
     }
 }

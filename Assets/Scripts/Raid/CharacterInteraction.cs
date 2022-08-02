@@ -22,6 +22,8 @@ public class CharacterInteraction : MonoBehaviour
     [SerializeField]
     private GameObject _buttonHome;
 
+    private Vector3 _offset;
+
     private void Awake()
     {
         _gameOverPanel.SetActive(false);
@@ -68,7 +70,12 @@ public class CharacterInteraction : MonoBehaviour
         {
             if (hit.collider)
             {
-                targetPredator = hit.collider.GetComponent<Predator>();
+                _offset = hit.point - transform.position;
+                if(_offset.magnitude < 30f)
+                {
+                    targetPredator = hit.collider.GetComponent<Predator>();
+                }
+               
             }
         }
     }

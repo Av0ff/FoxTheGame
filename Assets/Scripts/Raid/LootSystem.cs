@@ -17,7 +17,7 @@ public class LootSystem : MonoBehaviour
     {
         if(_data.Food != 9)
         {
-            if (DistanceToPickUp() < 3f)
+            if (DistanceToPickUp() < 5f)
             {
                 _data.Food++;
                 Destroy(gameObject);
